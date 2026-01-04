@@ -18,7 +18,10 @@ class Ec2InstanceStateManager(Ec2InstanceStateManagerABC):
         environment: Literal["dev", "stage", "prod"],
     ):
         self.client = client
-        self.filters = [{"Name": "tag:Environment", "Values": [environment]}]
+        self.filters = [
+            {"Name": "tag:Environment", "Values": [environment]},
+            {"Name": "tag:Schedule", "Values": ["office-hours"]},
+        ]
 
     def execute(self, strategy: str):
         return Ec2InstanceStateManagerStrategyFactory.create(strategy).execute(self)
