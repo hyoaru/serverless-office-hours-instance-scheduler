@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Lambda
-        uses: aws-actions/aws-lambda-deploy@v1
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
           function-name: ${{ inputs.environment }}-devops-instance-scheduler
           package-type: Image
