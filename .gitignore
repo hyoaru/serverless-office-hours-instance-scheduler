@@ -11,6 +11,7 @@ wheels/
 
 # Files
 .env
+.secrets
 *.pdf
 
 # Folders
