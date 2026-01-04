@@ -13,11 +13,6 @@ on:
         options: [dev, stage, prod]
         default: "dev"
 
-env:
-  AWS_REGION: ap-southeast-1
-  AWS_ECR_REPOSITORY: serverless-office-hours-instance-scheduler
-  AWS_IAM_ROLE: core-AWSFederatedRoleForGithubActions
-
 jobs:
   setup-environment:
     runs-on: ubuntu-latest
@@ -39,9 +34,9 @@ jobs:
     uses: ./.github/workflows/.worker-ecr-push.yaml
     with:
       environment: ${{ needs.setup-environment.outputs.environment }}
-      region: ${{ env.AWS_REGION }}
-      repository: ${{ env.AWS_ECR_REPOSITORY }}
-      role: ${{ env.AWS_IAM_ROLE }}
+      region: ${{ vars.AWS_REGION }}
+      repository: ${{ vars.AWS_ECR_REPOSITORY }}
+      role: ${{ vars.AWS_IAM_ROLE }}
     secrets: inherit
 
   deploy:
@@ -50,5 +45,5 @@ jobs:
     with:
       environment: ${{ needs.setup-environment.outputs.environment }}
       registry: ${{ needs.build-and-push.outputs.registry }}
-      repository: ${{ env.AWS_ECR_REPOSITORY }}
+      repository: ${{ vars.AWS_ECR_REPOSITORY }}
     secrets: inherit
